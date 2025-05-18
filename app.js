@@ -25,17 +25,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   next();
 });
-app.use('/api/gender', genderRouter);
-app.use('/api/specialization', specializationRouter);
-app.use('/api/degree', degreeRouter);
-app.use('/api/doctorType', doctorTypeRouter);
-app.use('/api/bloodGroup', bloodGroupRouter);
-app.use('/api/allergy',allergyRouter)
-app.use('/api/ChronicConditions',ChronicConditionsRouter)
-app.use('/api/relationTypes',RelationShipTypesRouter)
-app.use('/api/Roles',RolesRouter)
-app.use('/api/permission',permissionRoute)
-app.use('/api/feature',featureRouter)
+app.use('/catalogue/gender', genderRouter);
+app.use('/catalogue/specialization', specializationRouter);
+app.use('/catalogue/degree', degreeRouter);
+app.use('/catalogue/doctorType', doctorTypeRouter);
+app.use('/catalogue/bloodGroup', bloodGroupRouter);
+app.use('/catalogue/allergy',allergyRouter)
+app.use('/catalogue/ChronicConditions',ChronicConditionsRouter)
+app.use('/catalogue/relationTypes',RelationShipTypesRouter)
+app.use('/catalogue/Roles',RolesRouter)
+app.use('/catalogue/permission',permissionRoute)
+app.use('/catalogue/feature',featureRouter)
+
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
