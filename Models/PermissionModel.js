@@ -55,7 +55,7 @@ const permissionModel = new Schema({
 
   },
   isActive: {
-    type: String,
+    type: Number,
     default: 1,
   },
 

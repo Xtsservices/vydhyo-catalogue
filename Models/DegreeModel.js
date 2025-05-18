@@ -18,7 +18,7 @@ const DegreeSchema = new Schema({
     trim: true,
   },
   isActive: {
-    type: String,
+    type: Number,
     required: true,
     default:1
   },

@@ -14,7 +14,7 @@ const RolesSchema = new Schema({
     type: String,
   },
   isActive: {
-    type: String,
+    type: Number,
     default: 1,
   },
 

@@ -14,7 +14,7 @@ const ChronicConditionsSchema = new Schema({
     type: String,
   },
   isActive: {
-    type: String,
+    type: number,
     default: 1,
   },
 
