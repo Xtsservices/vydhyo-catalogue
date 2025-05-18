@@ -68,7 +68,9 @@ exports.updatePermission = async (req, res) => {
       }
       
       const requiredParams={
-        permissionId:req.body.permissionId
+        permissionId:req.body.permissionId,
+        updatedBy:req.body.updatedBy
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -76,6 +78,8 @@ exports.updatePermission = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const Permission = await CRUD.update({permissionId:req.body.permissionId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:Permission})
   } catch (err) {

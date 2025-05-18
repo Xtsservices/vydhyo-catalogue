@@ -69,7 +69,9 @@ exports.updateChronicConditions = async (req, res) => {
       }
       
       const requiredParams={
-        chronicId:req.body.chronicId
+        chronicId:req.body.chronicId,
+        updatedBy:req.body.updatedBy
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -77,6 +79,8 @@ exports.updateChronicConditions = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const updateBloodGroup = await CRUD.update({chronicId:req.body.chronicId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:updateBloodGroup})
   } catch (err) {

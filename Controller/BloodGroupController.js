@@ -74,7 +74,9 @@ exports.updateBloodGroup = async (req, res) => {
       }
       
       const requiredParams={
-        bloodGroupId:req.body.bloodGroupId
+        bloodGroupId:req.body.bloodGroupId,
+        updatedBy:req.body.updatedBy
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -82,6 +84,9 @@ exports.updateBloodGroup = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+
+      req.body.updatedDate=new Date()
+
     // Use CRUDOperations class to update gender
     const updateBloodGroup = await CRUD.update({bloodGroupId:req.body.bloodGroupId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:updateBloodGroup})

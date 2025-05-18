@@ -54,10 +54,27 @@ exports.getSpecializations = async (req, res) => {
 };
 
 // Update Gender by ID
-exports.updateGender = async (req, res) => {
+exports.updateSpecializations = async (req, res) => {
   try {
     // Use CRUDOperations class to update gender
-    const updatedGender = await CRUD.update(req.body.genderID, req.body);
+
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: 'Request body cannot be empty' });
+    }
+    
+    const requiredParams={
+      specializationsId:req.body.specializationsId,
+      updatedBy:req.body.updatedBy
+
+    }
+  
+    for (const [key, value] of Object.entries(requiredParams)) {
+      if (value === undefined || value === null ||   (typeof value === 'string' && value.trim() === '')) {
+        return res.status(400).json({ message: `${key} is required and cannot be empty` });
+      }
+    }
+    req.body.updatedDate=new Date()
+    const updatedGender = await CRUD.update({specializationsId:req.body.specializationsId}, req.body);
     res.json(updatedGender);
   } catch (err) {
     res.status(400).json({ message: err.message });

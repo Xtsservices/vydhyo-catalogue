@@ -72,14 +72,17 @@ exports.updateAllergy = async (req, res) => {
       }
       
       const requiredParams={
-        allergyId:req.body.allergyId
+        allergyId:req.body.allergyId,
+        updatedBy:req.body.updatedBy
       }
-    
+      
       for (const [key, value] of Object.entries(requiredParams)) {
         if (value === undefined || value === null ||   (typeof value === 'string' && value.trim() === '')) {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+
+      req.body.updatedDate=new Date()
     // Use CRUDOperations class to update gender
     const updateBloodGroup = await CRUD.update({allergyId:req.body.allergyId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:updateBloodGroup})

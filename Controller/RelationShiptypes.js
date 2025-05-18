@@ -69,7 +69,9 @@ exports.updateRelationshipTypes = async (req, res) => {
       }
       
       const requiredParams={
-        RelationshipTypeid:req.body.RelationshipTypeid
+        RelationshipTypeid:req.body.RelationshipTypeid,
+        updatedBy:req.body.updatedBy
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -77,6 +79,8 @@ exports.updateRelationshipTypes = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const RelationshipType = await CRUD.update({RelationshipTypeid:req.body.RelationshipTypeid}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:RelationshipType})
   } catch (err) {

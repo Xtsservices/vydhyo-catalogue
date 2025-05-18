@@ -4,7 +4,7 @@ const genderController = require('../Controller/SpecializationsController');
 
 
 router.post('/createSpecializations', genderController.createSpecializations);
-// router.get('/getSpecializations', genderController.getSpecializations);
-// router.put('/updateSpecializations', genderController.updateSpecializations);
+router.get('/getSpecializations', genderController.getSpecializations);
+router.put('/updateSpecializations', genderController.updateSpecializations);
 
 module.exports = router;

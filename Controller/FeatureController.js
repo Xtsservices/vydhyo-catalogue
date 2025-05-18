@@ -65,7 +65,8 @@ exports.updateFeature = async (req, res) => {
         return res.status(400).json({ message: 'Request body cannot be empty' });
     }
       const requiredParams={
-        featureId:req.body.featureId
+        featureId:req.body.featureId,
+        updatedBy:req.body.updatedBy
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -73,6 +74,8 @@ exports.updateFeature = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const feature = await CRUD.update({featureId:req.body.featureId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:feature})
   } catch (err) {
