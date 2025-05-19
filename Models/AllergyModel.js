@@ -14,7 +14,7 @@ const AllergyGroupSchema = new Schema({
     type: String,
   },
   isActive: {
-    type: number,
+    type: Number,
     default: 1,
   },
 
