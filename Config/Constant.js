@@ -11,7 +11,9 @@ const SequenceNames = {
     RELATIONSHIPTYPES:"RelationshipTypes",
     ROLES:"Roles",
     FEATURE:"Feature",
-    PERMISSION:"Permission"
+    PERMISSION:"Permission",
+    HOSPITAL:"Hospital",
+    DEPARTMENT:"Department"
   };
   
   module.exports = SequenceNames;
