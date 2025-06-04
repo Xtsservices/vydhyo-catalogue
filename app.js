@@ -14,6 +14,8 @@ const RelationShipTypesRouter=require('./Router/RelationshiptypTypesRouter')
 const RolesRouter=require('./Router/RolesRouter')
 const featureRouter=require('./Router/featureRouter')
 const permissionRoute=require('./Router/PermissionRouter')
+const hospital =require('./Router/HospitalRouter')
+const Department=require('./Router/DepartmentRoute')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -36,6 +38,8 @@ app.use('/catalogue/relationTypes',RelationShipTypesRouter)
 app.use('/catalogue/Roles',RolesRouter)
 app.use('/catalogue/permission',permissionRoute)
 app.use('/catalogue/feature',featureRouter)
+app.use('/catalogue/hospital',hospital)
+app.use('/catalogue/department',Department)
 
 
 app.listen(PORT, () => {
