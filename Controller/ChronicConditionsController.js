@@ -81,8 +81,8 @@ exports.updateChronicConditions = async (req, res) => {
       }
       req.body.updatedDate=new Date()
 
-    const updateBloodGroup = await CRUD.update({chronicId:req.body.chronicId}, req.body);
-    res.status(200).json({Message:"Data Updated Successfully",data:updateBloodGroup})
+    const updateData = await CRUD.update({chronicId:req.body.chronicId}, req.body);
+    res.status(200).json({Message:"Data Updated Successfully",data:updateData})
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
