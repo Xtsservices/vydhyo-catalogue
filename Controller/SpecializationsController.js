@@ -2,7 +2,7 @@ const Specializations = require('../Models/Specializations');
 const CRUDOperations = require('../ReusableFunction.js/CommanClass');  
 const specializationJoi = require('../Config/Joi/Specialization');
 const GSchema=require('../Models/SequnceSchema')
-const GenderSequence=require('../Config/Constant');
+const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(Specializations);
 
 exports.createSpecializations = async (req, res) => {
@@ -19,8 +19,6 @@ exports.createSpecializations = async (req, res) => {
   }
 
   const imageFile = req.file;
-  console.log("file", imageFile);
-
   req.body.aliasName = req.body.name ? req.body.name.toUpperCase() : "UNKNOWN";
 
   try {
@@ -32,7 +30,7 @@ exports.createSpecializations = async (req, res) => {
 
       // Generate specialization ID from counter
       const counter = await GSchema.findByIdAndUpdate(
-          { _id: GenderSequence.SPECIALIZATION },
+          { _id: Sequence.SPECIALIZATION },
           { $inc: { seq: 1 } },
           { new: true, upsert: true }
       );
