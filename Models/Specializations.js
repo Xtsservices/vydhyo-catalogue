@@ -34,6 +34,14 @@ const specializationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  image: {
+    data: Buffer, 
+    contentType: String, 
+  },
+  imageUrl:{
+    type: String,
+
+  }
 });
 
 const specializationModel = mongoose.model(

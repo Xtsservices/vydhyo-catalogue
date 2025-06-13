@@ -4,7 +4,6 @@ const GSchema=require('../Models/SequnceSchema')
 const DegreeSequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(degree);
 
-// Create Gender
 exports.createDegree = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -44,14 +43,17 @@ exports.createDegree = async (req, res) => {
   }
 };
 
-// Get All Genders
+// Get data 
 exports.getDegree = async (req, res) => {
   try {
-    // Use CRUDOperations class to get all genders
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.degreeId){
-      obj={degreeId:req.query.degreeId}
+      obj.degreeId=req.query.degreeId
     }
     const degree = await CRUD.find(obj);
     if(degree.length<1){
@@ -65,7 +67,7 @@ exports.getDegree = async (req, res) => {
   }
 };
 
-// Update Gender by ID
+// Update degreee by ID
 exports.updateDegree = async (req, res) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) {
@@ -75,7 +77,6 @@ exports.updateDegree = async (req, res) => {
       const requiredParams={
         degreeId:req.body.degreeId,
         updatedBy:req.body.updatedBy
-
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {

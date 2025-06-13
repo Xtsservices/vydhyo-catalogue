@@ -33,8 +33,8 @@ exports.createFeature = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.featureId = counter.seq;
-    const createRelationShipType = await CRUD.create(req.body);
-    res.status(200).json(createRelationShipType);
+    const createFeature = await CRUD.create(req.body);
+    res.status(200).json(createFeature);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -44,8 +44,12 @@ exports.getFeature = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.featureId){
-      obj={featureId:req.query.featureId}
+      obj.featureId=req.query.featureId
     }
     const feature = await CRUD.find(obj);
     if(feature.length<1){
@@ -83,7 +87,7 @@ exports.updateFeature = async (req, res) => {
   }
 };
 
-// Delete Gender by ID
+// Delete  by ID
 exports.deleteGender = async (req, res) => {
   try {
     // Use CRUDOperations class to delete gender by ID

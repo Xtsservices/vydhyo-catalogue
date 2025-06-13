@@ -63,8 +63,11 @@ exports.createSpecializations = async (req, res) => {
 exports.getSpecializations = async (req, res) => {
   try {
     let obj={}
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.specializationsId){
-      obj={specializationsId:req.query.specializationsId}
+      obj.specializationsId=req.query.specializationsId
     }
     const specializations = await CRUD.find(obj);
     if(specializations.length<1){
@@ -79,7 +82,7 @@ exports.getSpecializations = async (req, res) => {
   }
 };
 
-// Update Gender by ID
+// Update by ID
 exports.updateSpecializations = async (req, res) => {
   try {
     // Use CRUDOperations class to update gender
@@ -100,8 +103,8 @@ exports.updateSpecializations = async (req, res) => {
       }
     }
     req.body.updatedDate=new Date()
-    const updatedGender = await CRUD.update({specializationsId:req.body.specializationsId}, req.body);
-    res.json(updatedGender);
+    const updateSpecialization = await CRUD.update({specializationsId:req.body.specializationsId}, req.body);
+    res.status(200).json(updateSpecialization);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

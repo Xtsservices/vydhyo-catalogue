@@ -37,8 +37,8 @@ exports.createAllergy = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.allergyId = counter.seq;
-    const createBloodGroup = await CRUD.create(req.body);
-    res.status(200).json(createBloodGroup);
+    const createAllergy = await CRUD.create(req.body);
+    res.status(200).json(createAllergy);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -49,15 +49,21 @@ exports.getAllergy = async (req, res) => {
   try {
 
     let obj={}
-    if(req.query.allergyId){
-      obj={allergyId:req.query.allergyId}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
     }
-    const bloodGroup = await CRUD.find(obj);
-    if(bloodGroup.length<1){
+    if(req.query.allergyId){
+      obj.allergyId=req.query.allergyId
+    }
+
+
+    const getAllergy = await CRUD.find(obj);
+    if(getAllergy.length<1){
       res.status(400).json({Message:"No Data Found"})
  
     }
-    res.status(200).json({Message:"Data Fetch Successfully",data:bloodGroup})
+    res.status(200).json({Message:"Data Fetch Successfully",data:getAllergy})
 
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -84,8 +90,8 @@ exports.updateAllergy = async (req, res) => {
 
       req.body.updatedDate=new Date()
     // Use CRUDOperations class to update gender
-    const updateBloodGroup = await CRUD.update({allergyId:req.body.allergyId}, req.body);
-    res.status(200).json({Message:"Data Updated Successfully",data:updateBloodGroup})
+    const updateAllergy = await CRUD.update({allergyId:req.body.allergyId}, req.body);
+    res.status(200).json({Message:"Data Updated Successfully",data:updateAllergy})
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

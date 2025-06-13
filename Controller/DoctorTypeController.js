@@ -4,7 +4,7 @@ const GSchema=require('../Models/SequnceSchema')
 const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(DoctorTypeModel);
 
-// Create Gender
+// Create 
 exports.createDoctorType = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -44,13 +44,16 @@ exports.createDoctorType = async (req, res) => {
   }
 };
 
-// Get All Genders
 exports.getDoctorType = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.doctortypeId){
-      obj={doctortypeId:req.query.doctortypeId}
+      obj.doctortypeId=req.query.doctortypeId
     }
     const doctortype = await CRUD.find(obj);
     if(doctortype.length<1){
@@ -64,7 +67,6 @@ exports.getDoctorType = async (req, res) => {
   }
 };
 
-// Update Gender by ID
 exports.updateDoctorType = async (req, res) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) {
@@ -84,7 +86,7 @@ exports.updateDoctorType = async (req, res) => {
       }
       req.body.updatedDate=new Date()
 
-    // Use CRUDOperations class to update gender
+    // Use CRUDOperations class to update 
     const updatedDoctorType = await CRUD.update({doctortypeId:req.body.doctortypeId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:updatedDoctorType})
   } catch (err) {

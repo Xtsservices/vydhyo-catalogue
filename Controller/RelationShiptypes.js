@@ -4,7 +4,7 @@ const GSchema=require('../Models/SequnceSchema')
 const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(RelationshipTypesModel);
 
-// Create allergy
+// Create
 exports.createRelationshipTypes = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -41,13 +41,16 @@ exports.createRelationshipTypes = async (req, res) => {
   }
 };
 
-// Get All allergy
+// Get All 
 exports.getRelationshipTypes = async (req, res) => {
   try {
 
     let obj={}
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.RelationshipTypeid){
-      obj={RelationshipTypeid:req.query.RelationshipTypeid}
+      obj.RelationshipTypeid=req.query.RelationshipTypeid
     }
     const RelationshipType = await CRUD.find(obj);
     if(RelationshipType.length<1){
@@ -61,7 +64,7 @@ exports.getRelationshipTypes = async (req, res) => {
   }
 };
 
-// Update allergy by id
+// Update  by id
 exports.updateRelationshipTypes = async (req, res) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) {

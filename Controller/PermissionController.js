@@ -46,8 +46,11 @@ exports.getPermission = async (req, res) => {
   try {
 
     let obj={}
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.permissionId){
-      obj={permissionId:req.query.permissionId}
+      obj.permissionId=req.query.permissionId
     }
     const Permission = await CRUD.find(obj);
     if(Permission.length<1){

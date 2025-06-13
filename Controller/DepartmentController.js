@@ -2,7 +2,6 @@ const _model = require("../Models/DepartmentModel");
 const CRUDOperations = require("../ReusableFunction.js/CommanClass");
 const Sequence = require("../Models/SequnceSchema");
 const _constant = require("../Config/Constant");
-// Create an instance of CRUDOperations for the Gender model
 const CRUD = new CRUDOperations(_model);
 
 exports.createDepartment = async (req, res) => {
@@ -42,8 +41,8 @@ exports.createDepartment = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.departmentID = counter.seq;
-    const createdGender = await CRUD.create(req.body);
-    return res.status(201).json(createdGender);
+    const createDepartment = await CRUD.create(req.body);
+    return res.status(201).json(createDepartment);
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }

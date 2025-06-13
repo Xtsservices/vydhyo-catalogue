@@ -44,8 +44,8 @@ exports.createHospital = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.hospitalID = counter.seq;
-    const createdGender = await CRUD.create(req.body);
-   return res.status(201).json(createdGender);
+    const createdhospital = await CRUD.create(req.body);
+   return res.status(201).json(createdhospital);
   } catch (err) {
     return   res.status(400).json({ message: err.message });
   }

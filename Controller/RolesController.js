@@ -40,11 +40,12 @@ exports.createRoles = async (req, res) => {
   }
 };
 
-// Get All allergy
+// Get All
 exports.getRoles = async (req, res) => {
   try {
 
     let obj={}
+    
     if(req.query.RoleId){
       obj={RoleId:req.query.RoleId}
     }

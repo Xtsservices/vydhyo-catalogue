@@ -4,7 +4,6 @@ const GSchema=require('../Models/SequnceSchema')
 const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(ChronicConditionsModel);
 
-// Create allergy
 exports.createChronicConditions = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -34,20 +33,24 @@ exports.createChronicConditions = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.chronicId = counter.seq;
-    const createBloodGroup = await CRUD.create(req.body);
-    res.status(200).json(createBloodGroup);
+    const createchronic = await CRUD.create(req.body);
+    res.status(200).json(createchronic);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
-// Get All allergy
+// Get  data
 exports.getChronicConditions = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.chronicId){
-      obj={chronicId:req.query.chronicId}
+      obj.chronicId=req.query.chronicId
     }
     const chronicData = await CRUD.find(obj);
     if(chronicData.length<1){

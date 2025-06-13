@@ -6,7 +6,6 @@ const GSchema=require('../Models/SequnceSchema')
 const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(BloodGroupModel);
 
-// Create Gender
 exports.createBloodGroup = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -29,8 +28,8 @@ exports.createBloodGroup = async (req, res) => {
   req.body.aliasName = req.body.name ? req.body.name.trim().toUpperCase() : 'UNKNOWN';
 
   try { 
-    const getDoctorType = await CRUD.findOne({"aliasName":req.body.aliasName});
-    if(getDoctorType){
+    const getData = await CRUD.findOne({"aliasName":req.body.aliasName});
+    if(getData){
      return res.status(400).json({Message:"BloodGroup Already Exists"})
     }
     const counter = await GSchema.findByIdAndUpdate(
@@ -51,8 +50,12 @@ exports.getBloodGroup = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.bloodGroupId){
-      obj={bloodGroupId:req.query.bloodGroupId}
+      obj.bloodGroupId=req.query.bloodGroupId
     }
     const bloodGroup = await CRUD.find(obj);
     if(bloodGroup.length<1){
