@@ -34,9 +34,9 @@ exports.createRoles = async (req, res) => {
     );
     req.body.RoleId = counter.seq;
     const createRelationShipType = await CRUD.create(req.body);
-    res.status(200).json(createRelationShipType);
+   return res.status(200).json(createRelationShipType);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    return  res.status(400).json({ message: err.message });
   }
 };
 
@@ -45,19 +45,23 @@ exports.getRoles = async (req, res) => {
   try {
 
     let obj={}
-    
+    obj.isActive=1
+
     if(req.query.RoleId){
       obj={RoleId:req.query.RoleId}
     }
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     const role = await CRUD.find(obj);
     if(role.length<1){
-      res.status(400).json({Message:"No Data Found"})
+    return  res.status(400).json({Message:"No Data Found"})
  
     }
-    res.status(200).json({Message:"Data Fetch Successfully",data:role})
+   return res.status(200).json({Message:"Data Fetch Successfully",data:role})
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+  return  res.status(500).json({ message: err.message });
   }
 };
 
@@ -82,9 +86,9 @@ exports.updateRoles = async (req, res) => {
       req.body.updatedDate=new Date()
 
     const Role = await CRUD.update({RoleId:req.body.RoleId}, req.body);
-    res.status(200).json({Message:"Data Updated Successfully",data:Role})
+   return res.status(200).json({Message:"Data Updated Successfully",data:Role})
   } catch (err) {
-    res.status(400).json({ message: err.message });
+   return res.status(400).json({ message: err.message });
   }
 };
 

@@ -25,7 +25,7 @@ exports.createFeature = async (req, res) => {
   try { 
     const Feature = await CRUD.findOne({"aliasName":req.body.aliasName});
     if(Feature){
-     return res.status(400).json({Message:"Role Already Exists"})
+     return res.status(400).json({Message:"Feature Already Exists"})
     }
     const counter = await GSchema.findByIdAndUpdate(
       { _id: Sequence.FEATURE },

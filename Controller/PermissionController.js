@@ -46,6 +46,8 @@ exports.getPermission = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive=1
+
     if (req.query.isActive) {
       obj.isActive = req.query.isActive;
     }

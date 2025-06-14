@@ -38,9 +38,9 @@ exports.createDoctorType = async (req, res) => {
     );
     req.body.doctortypeId = counter.seq;
     const createDoctorType = await CRUD.create(req.body);
-    res.status(200).json(createDoctorType);
+   return res.status(200).json(createDoctorType);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    return  res.status(400).json({ message: err.message });
   }
 };
 

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const DoctorTypeSchema = new Schema({
   doctortypeId: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {

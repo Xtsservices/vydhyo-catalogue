@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const RelationshiptypSchema = new Schema({
     RelationshipTypeid: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {

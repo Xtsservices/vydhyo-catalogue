@@ -46,6 +46,8 @@ exports.getRelationshipTypes = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive=1
+
     if (req.query.isActive) {
       obj.isActive = req.query.isActive;
     }
@@ -54,13 +56,13 @@ exports.getRelationshipTypes = async (req, res) => {
     }
     const RelationshipType = await CRUD.find(obj);
     if(RelationshipType.length<1){
-      res.status(400).json({Message:"No Data Found"})
+      return res.status(400).json({Message:"No Data Found"})
  
     }
-    res.status(200).json({Message:"Data Fetch Successfully",data:RelationshipType})
+   return res.status(200).json({Message:"Data Fetch Successfully",data:RelationshipType})
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 

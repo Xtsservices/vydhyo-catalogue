@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const featuredSchema = new Schema({
     featureId: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {
