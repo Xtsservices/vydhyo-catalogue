@@ -6,8 +6,6 @@ const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(Specializations);
 
 exports.createSpecializations = async (req, res) => {
-  console.log("body", req.body);
-
   if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({ message: "Request body cannot be empty" });
   }
