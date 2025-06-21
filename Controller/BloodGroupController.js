@@ -57,8 +57,6 @@ exports.getBloodGroup = async (req, res) => {
       obj.bloodGroupId = req.query.bloodGroupId;
     }
 
-    console.log("Query Filter:", obj);
-
     const bloodGroup = await CRUD.find(obj);
 
     if (bloodGroup.length < 1) {
