@@ -12,9 +12,7 @@ exports.createDoctorType = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -74,8 +72,7 @@ exports.updateDoctorType = async (req, res) => {
       }
       
       const requiredParams={
-        doctortypeId:req.body.doctortypeId,
-        updatedBy:req.body.updatedBy
+        doctortypeId:req.body.doctortypeId 
 
       }
     

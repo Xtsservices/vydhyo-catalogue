@@ -34,7 +34,6 @@ exports.createSpecializations = async (req, res) => {
       );
 
       req.body.specializationsId = counter.seq;
-      req.body.updatedBy = req.body.createdBy;
 
       // Convert image to Base64 format and generate a viewable URL
       // if (imageFile) {
@@ -90,8 +89,7 @@ exports.updateSpecializations = async (req, res) => {
     }
     
     const requiredParams={
-      specializationsId:req.body.specializationsId,
-      updatedBy:req.body.updatedBy
+      specializationsId:req.body.specializationsId
 
     }
   

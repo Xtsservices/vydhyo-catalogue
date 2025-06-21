@@ -11,9 +11,7 @@ exports.createChronicConditions = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -72,8 +70,7 @@ exports.updateChronicConditions = async (req, res) => {
       }
       
       const requiredParams={
-        chronicId:req.body.chronicId,
-        updatedBy:req.body.updatedBy
+        chronicId:req.body.chronicId 
 
       }
     

@@ -70,9 +70,7 @@ exports.updateGender = async (req, res) => {
   try {
 
     const requiredParams={
-      genderID:req.body.genderID,
-      updatedBy:req.body.updatedBy
-    }
+      genderID:req.body.genderID    }
   
     for (const [key, value] of Object.entries(requiredParams)) {
       if (value === undefined || value === null ||   (typeof value === 'string' && value.trim() === '')) {

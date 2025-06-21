@@ -25,15 +25,7 @@ const featuredSchema = new Schema({
   updatedDate: {
     type: Date,
     default: Date.now,
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  updatedBy: {
-    type: String,
-    required: true,
-  },
+  }  
 });
 
 module.exports = mongoose.model("feature", featuredSchema);

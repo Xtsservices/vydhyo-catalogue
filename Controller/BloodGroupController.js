@@ -13,9 +13,7 @@ exports.createBloodGroup = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -48,26 +46,35 @@ exports.createBloodGroup = async (req, res) => {
 // Get All Genders
 exports.getBloodGroup = async (req, res) => {
   try {
-
-    let obj={}
+    let obj = {};
     obj.isActive = 1;
+
     if (req.query.isActive) {
-      obj.isActive = req.query.isActive;
+      obj.isActive = Number(req.query.isActive); 
     }
-    if(req.query.bloodGroupId){
-      obj.bloodGroupId=req.query.bloodGroupId
+
+    if (req.query.bloodGroupId) {
+      obj.bloodGroupId = req.query.bloodGroupId;
     }
+
+    console.log("Query Filter:", obj);
+
     const bloodGroup = await CRUD.find(obj);
-    if(bloodGroup.length<1){
-      res.status(400).json({Message:"No Data Found"})
- 
+
+    if (bloodGroup.length < 1) {
+      return res.status(400).json({ Message: "No Data Found" });
     }
-    res.status(200).json({Message:"Data Fetch Successfully",data:bloodGroup})
+
+    return res.status(200).json({
+      Message: "Data Fetch Successfully",
+      data: bloodGroup,
+    });
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
+
 
 // Update Gender by ID
 exports.updateBloodGroup = async (req, res) => {
@@ -77,8 +84,7 @@ exports.updateBloodGroup = async (req, res) => {
       }
       
       const requiredParams={
-        bloodGroupId:req.body.bloodGroupId,
-        updatedBy:req.body.updatedBy
+        bloodGroupId:req.body.bloodGroupId 
 
       }
     

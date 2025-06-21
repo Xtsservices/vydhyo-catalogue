@@ -11,9 +11,7 @@ exports.createDegree = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -75,8 +73,7 @@ exports.updateDegree = async (req, res) => {
       }
       
       const requiredParams={
-        degreeId:req.body.degreeId,
-        updatedBy:req.body.updatedBy
+        degreeId:req.body.degreeId 
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {

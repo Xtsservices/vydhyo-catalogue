@@ -11,9 +11,7 @@ exports.createFeature = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -69,8 +67,7 @@ exports.updateFeature = async (req, res) => {
         return res.status(400).json({ message: 'Request body cannot be empty' });
     }
       const requiredParams={
-        featureId:req.body.featureId,
-        updatedBy:req.body.updatedBy
+        featureId:req.body.featureId 
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {

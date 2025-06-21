@@ -13,20 +13,6 @@ const genderValidationSchema = Joi.object({
       'string.max': '"name" should have a maximum length of 50 characters',
       'any.required': '"name" is a required field',
     }),
-  createdBy: Joi.string()
-    .required()
-    .messages({
-      'string.base': '"createdBy" should be a type of string',
-      'string.empty': '"createdBy" cannot be empty',
-      'any.required': '"createdBy" is a required field',
-    }),
-    updatedBy: Joi.string()
-    .required()
-    .messages({
-      'string.base': '"updatedBy" should be a type of string',
-      'string.empty': '"updatedBy" cannot be empty',
-      'any.required': '"updatedBy" is a required field',
-    }),
   updatedTime: Joi.date().default(Date.now), // Default the updatedTime if not provided
 })
   .min(1)

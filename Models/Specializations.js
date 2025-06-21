@@ -18,14 +18,6 @@ const specializationSchema = new mongoose.Schema({
     type: Number,
     default: 1, // 1 = active, 0 = inactive
   },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  updatedBy: {
-    type: String,
-    required: false,
-  },
   createdTime: {
     type: Date,
     default: Date.now,
@@ -35,13 +27,12 @@ const specializationSchema = new mongoose.Schema({
     default: Date.now,
   },
   image: {
-    data: Buffer, 
-    contentType: String, 
+    data: Buffer,
+    contentType: String,
   },
-  imageUrl:{
+  imageUrl: {
     type: String,
-
-  }
+  },
 });
 
 const specializationModel = mongoose.model(

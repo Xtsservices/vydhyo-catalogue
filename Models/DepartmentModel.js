@@ -13,16 +13,9 @@ const _Schema = new mongoose.Schema(
     },
     aliasName: { type: String },
     isActive: { type: Number, default: 1 }, // 0 for inactive, 1 for active
-    createdBy: {
-      type: String,
-      required: true,
-    },
     createdTime: {
       type: Date,
       default: Date.now,
-    },
-    updatedBy: {
-      type: String,
     },
     updatedTime: {
       type: Date,

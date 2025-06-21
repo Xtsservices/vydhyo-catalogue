@@ -11,9 +11,7 @@ exports.createRoles = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -73,8 +71,7 @@ exports.updateRoles = async (req, res) => {
       }
       
       const requiredParams={
-        RoleId:req.body.RoleId,
-        updatedBy:req.body.updatedBy
+        RoleId:req.body.RoleId 
 
       }
     

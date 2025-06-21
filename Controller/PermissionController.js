@@ -12,9 +12,7 @@ exports.createPermission = async (req, res) => {
   
   const requiredParams={
     featureId:req.body.featureId,
-    RoleId:req.body.RoleId,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    RoleId:req.body.RoleId 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -73,8 +71,7 @@ exports.updatePermission = async (req, res) => {
       }
       
       const requiredParams={
-        permissionId:req.body.permissionId,
-        updatedBy:req.body.updatedBy
+        permissionId:req.body.permissionId 
 
       }
     

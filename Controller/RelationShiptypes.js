@@ -12,9 +12,7 @@ exports.createRelationshipTypes = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -74,8 +72,7 @@ exports.updateRelationshipTypes = async (req, res) => {
       }
       
       const requiredParams={
-        RelationshipTypeid:req.body.RelationshipTypeid,
-        updatedBy:req.body.updatedBy
+        RelationshipTypeid:req.body.RelationshipTypeid 
 
       }
     
