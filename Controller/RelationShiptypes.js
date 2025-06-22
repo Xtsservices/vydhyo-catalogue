@@ -4,7 +4,7 @@ const GSchema=require('../Models/SequnceSchema')
 const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(RelationshipTypesModel);
 
-// Create allergy
+// Create
 exports.createRelationshipTypes = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -12,9 +12,7 @@ exports.createRelationshipTypes = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -41,27 +39,32 @@ exports.createRelationshipTypes = async (req, res) => {
   }
 };
 
-// Get All allergy
+// Get All 
 exports.getRelationshipTypes = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive=1
+
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.RelationshipTypeid){
-      obj={RelationshipTypeid:req.query.RelationshipTypeid}
+      obj.RelationshipTypeid=req.query.RelationshipTypeid
     }
     const RelationshipType = await CRUD.find(obj);
     if(RelationshipType.length<1){
-      res.status(400).json({Message:"No Data Found"})
+      return res.status(400).json({Message:"No Data Found"})
  
     }
-    res.status(200).json({Message:"Data Fetch Successfully",data:RelationshipType})
+   return res.status(200).json({Message:"Data Fetch Successfully",data:RelationshipType})
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
-// Update allergy by id
+// Update  by id
 exports.updateRelationshipTypes = async (req, res) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) {
@@ -69,7 +72,8 @@ exports.updateRelationshipTypes = async (req, res) => {
       }
       
       const requiredParams={
-        RelationshipTypeid:req.body.RelationshipTypeid
+        RelationshipTypeid:req.body.RelationshipTypeid 
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -77,6 +81,8 @@ exports.updateRelationshipTypes = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const RelationshipType = await CRUD.update({RelationshipTypeid:req.body.RelationshipTypeid}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:RelationshipType})
   } catch (err) {

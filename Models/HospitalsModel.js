@@ -1,14 +1,11 @@
 const mongoose = require("mongoose");
-
-const { required } = require("joi");
-// Define Gender Schema
-const genderSchema = new mongoose.Schema(
+const hospitalSchema = new mongoose.Schema(
   {
-    genderID: {
+    hospitalID: {
       type: Number,
       unique: true,
     },
-    type: {
+    name: {
       type: String,
       required: true, 
       unique: true, 
@@ -27,6 +24,5 @@ const genderSchema = new mongoose.Schema(
   }
 );
 
-// Create Gender Model
-const Gender = mongoose.model("Gender", genderSchema);
-module.exports = Gender;
+const Hospital = mongoose.model("Hospital", hospitalSchema);
+module.exports = Hospital;

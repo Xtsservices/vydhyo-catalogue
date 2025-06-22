@@ -4,7 +4,6 @@ const GSchema=require('../Models/SequnceSchema')
 const Sequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(ChronicConditionsModel);
 
-// Create allergy
 exports.createChronicConditions = async (req, res) => {
   // Check if request body is empty
   if (!req.body || Object.keys(req.body).length === 0) {
@@ -12,9 +11,7 @@ exports.createChronicConditions = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -34,20 +31,24 @@ exports.createChronicConditions = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.chronicId = counter.seq;
-    const createBloodGroup = await CRUD.create(req.body);
-    res.status(200).json(createBloodGroup);
+    const createchronic = await CRUD.create(req.body);
+    res.status(200).json(createchronic);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
-// Get All allergy
+// Get  data
 exports.getChronicConditions = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.chronicId){
-      obj={chronicId:req.query.chronicId}
+      obj.chronicId=req.query.chronicId
     }
     const chronicData = await CRUD.find(obj);
     if(chronicData.length<1){
@@ -69,7 +70,8 @@ exports.updateChronicConditions = async (req, res) => {
       }
       
       const requiredParams={
-        chronicId:req.body.chronicId
+        chronicId:req.body.chronicId 
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -77,8 +79,10 @@ exports.updateChronicConditions = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
-    const updateBloodGroup = await CRUD.update({chronicId:req.body.chronicId}, req.body);
-    res.status(200).json({Message:"Data Updated Successfully",data:updateBloodGroup})
+      req.body.updatedDate=new Date()
+
+    const updateData = await CRUD.update({chronicId:req.body.chronicId}, req.body);
+    res.status(200).json({Message:"Data Updated Successfully",data:updateData})
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

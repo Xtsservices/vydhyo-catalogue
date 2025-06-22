@@ -11,9 +11,7 @@ exports.createRoles = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -34,29 +32,34 @@ exports.createRoles = async (req, res) => {
     );
     req.body.RoleId = counter.seq;
     const createRelationShipType = await CRUD.create(req.body);
-    res.status(200).json(createRelationShipType);
+   return res.status(200).json(createRelationShipType);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    return  res.status(400).json({ message: err.message });
   }
 };
 
-// Get All allergy
+// Get All
 exports.getRoles = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive=1
+
     if(req.query.RoleId){
       obj={RoleId:req.query.RoleId}
     }
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     const role = await CRUD.find(obj);
     if(role.length<1){
-      res.status(400).json({Message:"No Data Found"})
+    return  res.status(400).json({Message:"No Data Found"})
  
     }
-    res.status(200).json({Message:"Data Fetch Successfully",data:role})
+   return res.status(200).json({Message:"Data Fetch Successfully",data:role})
 
   } catch (err) {
-    res.status(500).json({ message: err.message });
+  return  res.status(500).json({ message: err.message });
   }
 };
 
@@ -68,7 +71,8 @@ exports.updateRoles = async (req, res) => {
       }
       
       const requiredParams={
-        RoleId:req.body.RoleId
+        RoleId:req.body.RoleId 
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -76,10 +80,12 @@ exports.updateRoles = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const Role = await CRUD.update({RoleId:req.body.RoleId}, req.body);
-    res.status(200).json({Message:"Data Updated Successfully",data:Role})
+   return res.status(200).json({Message:"Data Updated Successfully",data:Role})
   } catch (err) {
-    res.status(400).json({ message: err.message });
+   return res.status(400).json({ message: err.message });
   }
 };
 

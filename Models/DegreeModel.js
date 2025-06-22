@@ -18,7 +18,7 @@ const DegreeSchema = new Schema({
     trim: true,
   },
   isActive: {
-    type: String,
+    type: Number,
     required: true,
     default:1
   },
@@ -29,15 +29,7 @@ const DegreeSchema = new Schema({
   updatedDate: {
     type: Date,
     default: Date.now,
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  updatedBy: {
-    type: String,
-    required: true,
-  },
+  }  
 });
 
 module.exports = mongoose.model("Degree", DegreeSchema);

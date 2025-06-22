@@ -12,9 +12,7 @@ exports.createPermission = async (req, res) => {
   
   const requiredParams={
     featureId:req.body.featureId,
-    RoleId:req.body.RoleId,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    RoleId:req.body.RoleId 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -46,8 +44,13 @@ exports.getPermission = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive=1
+
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.permissionId){
-      obj={permissionId:req.query.permissionId}
+      obj.permissionId=req.query.permissionId
     }
     const Permission = await CRUD.find(obj);
     if(Permission.length<1){
@@ -68,7 +71,8 @@ exports.updatePermission = async (req, res) => {
       }
       
       const requiredParams={
-        permissionId:req.body.permissionId
+        permissionId:req.body.permissionId 
+
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -76,6 +80,8 @@ exports.updatePermission = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const Permission = await CRUD.update({permissionId:req.body.permissionId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:Permission})
   } catch (err) {

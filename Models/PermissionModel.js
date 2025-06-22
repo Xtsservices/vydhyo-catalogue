@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const permissionModel = new Schema({
     permissionId: {
-    type: String,
+    type: Number,
     required: true,
   },
   featureId: {
@@ -55,7 +55,7 @@ const permissionModel = new Schema({
 
   },
   isActive: {
-    type: String,
+    type: Number,
     default: 1,
   },
 
@@ -66,15 +66,7 @@ const permissionModel = new Schema({
   updatedDate: {
     type: Date,
     default: Date.now,
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  updatedBy: {
-    type: String,
-    required: true,
-  },
+  }  
 });
 
-module.exports = mongoose.model("PermissionModel", permissionModel);
+  module.exports = mongoose.model("PermissionModel", permissionModel);

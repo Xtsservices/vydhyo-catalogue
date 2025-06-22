@@ -11,9 +11,7 @@ exports.createFeature = async (req, res) => {
   }
   
   const requiredParams={
-    name:req.body.name,
-    createdBy:req.body.createdBy,
-    updatedBy:req.body.updatedBy
+    name:req.body.name 
   }
 
   for (const [key, value] of Object.entries(requiredParams)) {
@@ -25,7 +23,7 @@ exports.createFeature = async (req, res) => {
   try { 
     const Feature = await CRUD.findOne({"aliasName":req.body.aliasName});
     if(Feature){
-     return res.status(400).json({Message:"Role Already Exists"})
+     return res.status(400).json({Message:"Feature Already Exists"})
     }
     const counter = await GSchema.findByIdAndUpdate(
       { _id: Sequence.FEATURE },
@@ -33,8 +31,8 @@ exports.createFeature = async (req, res) => {
       { new: true, upsert: true }
     );
     req.body.featureId = counter.seq;
-    const createRelationShipType = await CRUD.create(req.body);
-    res.status(200).json(createRelationShipType);
+    const createFeature = await CRUD.create(req.body);
+    res.status(200).json(createFeature);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -44,8 +42,12 @@ exports.getFeature = async (req, res) => {
   try {
 
     let obj={}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
+    }
     if(req.query.featureId){
-      obj={featureId:req.query.featureId}
+      obj.featureId=req.query.featureId
     }
     const feature = await CRUD.find(obj);
     if(feature.length<1){
@@ -65,7 +67,7 @@ exports.updateFeature = async (req, res) => {
         return res.status(400).json({ message: 'Request body cannot be empty' });
     }
       const requiredParams={
-        featureId:req.body.featureId
+        featureId:req.body.featureId 
       }
     
       for (const [key, value] of Object.entries(requiredParams)) {
@@ -73,6 +75,8 @@ exports.updateFeature = async (req, res) => {
           return res.status(400).json({ message: `${key} is required and cannot be empty` });
         }
       }
+      req.body.updatedDate=new Date()
+
     const feature = await CRUD.update({featureId:req.body.featureId}, req.body);
     res.status(200).json({Message:"Data Updated Successfully",data:feature})
   } catch (err) {
@@ -80,7 +84,7 @@ exports.updateFeature = async (req, res) => {
   }
 };
 
-// Delete Gender by ID
+// Delete  by ID
 exports.deleteGender = async (req, res) => {
   try {
     // Use CRUDOperations class to delete gender by ID

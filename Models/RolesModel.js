@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const RolesSchema = new Schema({
     RoleId: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {
@@ -14,7 +14,7 @@ const RolesSchema = new Schema({
     type: String,
   },
   isActive: {
-    type: String,
+    type: Number,
     default: 1,
   },
 
@@ -25,15 +25,7 @@ const RolesSchema = new Schema({
   updatedDate: {
     type: Date,
     default: Date.now,
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  updatedBy: {
-    type: String,
-    required: true,
-  },
+  }  
 });
 
 module.exports = mongoose.model("Roles", RolesSchema);

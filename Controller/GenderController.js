@@ -3,7 +3,6 @@ const CRUDOperations = require('../ReusableFunction.js/CommanClass');  // Import
 const createGenderSchema = require('../Config/Joi/Gender');  // Joi validation schema
 const GSchema=require('../Models/SequnceSchema')
 const GenderSequence=require('../Config/Constant');
-// Create an instance of CRUDOperations for the Gender model
 const CRUD = new CRUDOperations(Gender);
 
 // Create Gender
@@ -46,11 +45,13 @@ exports.getGenders = async (req, res) => {
     // Use CRUDOperations class to get all genders
 
     let obj={}
-    if(req.query.genderID){
-      obj={genderID:req.query.genderID}
+    obj.isActive = 1;
+    if (req.query.isActive) {
+      obj.isActive = req.query.isActive;
     }
-    console.log("0-00--",obj)
-
+    if(req.query.genderID){
+      obj.genderID=req.query.genderID
+    }
     const genders = await CRUD.find(obj);
     if(genders.length<1){
       res.status(400).json({Message:"No Data Found",data:genders})
@@ -67,7 +68,18 @@ exports.getGenders = async (req, res) => {
 // Update Gender by ID
 exports.updateGender = async (req, res) => {
   try {
-    // Use CRUDOperations class to update gender
+
+    const requiredParams={
+      genderID:req.body.genderID    }
+  
+    for (const [key, value] of Object.entries(requiredParams)) {
+      if (value === undefined || value === null ||   (typeof value === 'string' && value.trim() === '')) {
+        return res.status(400).json({ message: `${key} is required and cannot be empty` });
+      }
+    }
+    req.body.updatedDate=new Date()
+
+
     const updatedGender = await CRUD.update({genderID:req.body.genderID}, req.body);
     res.json(updatedGender);
   } catch (err) {

@@ -35,7 +35,6 @@ class CRUDOperations {
   
     // Update Operation
     async update(obj, data) {
-        console.log("909009",obj)
       try {
         const updatedDocument = await this.model.findOneAndUpdate(obj, data, {
           new: true,

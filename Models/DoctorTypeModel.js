@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const DoctorTypeSchema = new Schema({
   doctortypeId: {
-    type: String,
+    type: Number,
     required: true,
   },
   name: {
@@ -14,7 +14,7 @@ const DoctorTypeSchema = new Schema({
     type: String,
   },
   isActive: {
-    type: String,
+    type: Number,
     default: 1,
   },
 
@@ -25,15 +25,7 @@ const DoctorTypeSchema = new Schema({
   updatedDate: {
     type: Date,
     default: Date.now,
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  updatedBy: {
-    type: String,
-    required: true,
-  },
+  }  
 });
 
 module.exports = mongoose.model("DoctorType", DoctorTypeSchema);

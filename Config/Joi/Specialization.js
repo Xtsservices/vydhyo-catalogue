@@ -9,21 +9,6 @@ const specializationValidationSchema = Joi.object({
     "any.required": '"name" is a required field',
   }),
 
-  aliasName: Joi.string().trim().optional().messages({
-    "string.base": '"aliasName" should be a type of string',
-  }),
-  createdBy: Joi.string().required().messages({
-    "string.base": '"createdBy" should be a type of string',
-    "string.empty": '"createdBy" cannot be empty',
-    "any.required": '"createdBy" is a required field',
-  }),
-
-  updatedBy: Joi.string().optional().messages({
-    "string.base": '"updatedBy" should be a type of string',
-    "string.empty": '"createdBy" cannot be empty',
-    "any.required": '"createdBy" is a required field',
-  }),
-
   createdTime: Joi.date().optional(),
   updatedTime: Joi.date().optional(),
 });
