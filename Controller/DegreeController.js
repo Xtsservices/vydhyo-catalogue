@@ -3,6 +3,10 @@ const CRUDOperations = require('../ReusableFunction.js/CommanClass');  // Import
 const GSchema=require('../Models/SequnceSchema')
 const DegreeSequence=require('../Config/Constant');
 const CRUD = new CRUDOperations(degree);
+const DoctorDegreeModel = require('../Models/DoctorDegreeModel');
+const Counter = require('../Sequence/DoctorDegreeSequence');
+const PREFIX_SEQUENCE = require('../utils/constant');
+const XLSX = require('xlsx'); // Add this import
 
 exports.createDegree = async (req, res) => {
   // Check if request body is empty
@@ -97,6 +101,103 @@ exports.deleteGender = async (req, res) => {
     // Use CRUDOperations class to delete gender by ID
     const response = await CRUD.delete(req.params.id);
     res.json(response);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+async function getNextSequenceValue(sequenceName) {
+    const counter = await Counter.findByIdAndUpdate(
+        { _id: sequenceName },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+    );
+    return `${PREFIX_SEQUENCE.DOCTOR_DEGREE_SEQUENCE.SEQUENCE}${counter.seq.toString().padStart(4, '0')}`;
+}
+
+exports.uploadDegrees = async (req, res) => {
+   console.log('uploadDegrees endpoint hit');
+    try {
+        // Ensure MongoDB connection is established
+
+console.log("first")
+        // Check if file exists
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: 'No file uploaded'
+            });
+        }
+console.log("first3")
+
+        // Read the Excel file from buffer (multer memory storage)
+        const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        // Convert sheet to JSON, mapping "Course Name" to "degreeName"
+        const data = XLSX.utils.sheet_to_json(sheet, { header: ['slNo', 'degreeName'] });
+console.log("firdatast==",data)
+
+        if (!data || data.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'No data found in Excel file'
+            });
+        }
+
+        // Prepare data for insertion
+        const degreesToInsert = [];
+        for (const row of data) {
+            // Validate required fields
+            if (!row.degreeName) {
+                console.warn(`Skipping row with missing degreeName: ${JSON.stringify(row)}`);
+                continue;
+            }
+
+            // Generate unique degreeId for each degree
+            const degreeId = await getNextSequenceValue(PREFIX_SEQUENCE.DOCTOR_DEGREE_SEQUENCE.DOCTOR_MODEL);
+
+            degreesToInsert.push({
+                degreeId,
+                degreeName: row.degreeName.trim(),
+                description: '', // No description in Excel, default to empty string
+                createdAt: new Date()
+            });
+        }
+
+        // Insert data into MongoDB
+        if (degreesToInsert.length > 0) {
+            const result = await DoctorDegreeModel.insertMany(degreesToInsert, { ordered: false });
+            return res.status(200).json({
+                success: true,
+                message: `${result.length} degrees inserted successfully`,
+                data: result
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: 'No valid data found to insert'
+            });
+        }
+
+    } catch (error) {
+        console.error('Error uploading degrees:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to upload degrees',
+            error: error.message
+        });
+    }
+};
+
+exports.getAllDegrees = async (req, res) => {
+  try {
+    const degrees = await DoctorDegreeModel.find({} );
+    if (degrees.length < 1) {
+      return res.status(400).json({ Message: "No Data Found", data: degrees });
+    }
+    res.status(200).json({ Message: "Data Fetch Successfully", data: degrees });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
